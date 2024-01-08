@@ -13,5 +13,10 @@ def index():
     return jsonify({"number": random.random()})
 
 
+@app.route("/about")
+def about():
+    return "About"
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=os.getenv("PORT", default=5000))
