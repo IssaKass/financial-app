@@ -8,9 +8,7 @@ app = Flask(__name__)
 CORS(
     app,
     resources={
-        r"/api/*": {
-            "origins": ["https://react-frontend-production-48e6.up.railway.app/"]
-        }
+        "*": {"origins": ["https://react-frontend-production-48e6.up.railway.app/"]}
     },
 )
 
