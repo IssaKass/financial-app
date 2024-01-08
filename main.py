@@ -15,7 +15,16 @@ CORS(
 
 @app.route("/")
 def index():
-    return jsonify({"number": random.random()})
+    return (
+        jsonify(
+            {
+                "title": "iPhone 9",
+                "description": "An apple mobile which is nothing like apple",
+                "price": 549,
+            }
+        ),
+        200,
+    )
 
 
 @app.route("/about")
