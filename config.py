@@ -2,47 +2,46 @@
 
 
 import datetime
+import os
+from secrets import token_hex
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Config:
     """Base configuration class."""
 
-    # pylint: disable=too-few-public-methods
-    SECRET_KEY = "de641bd49626e8951d21f788"
-
-    SQLALCHEMY_DATABASE_URI = "sqlite:///financial.db"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    JWT_SECRET_KEY = "3b6e5e0a75e8581f92110b7f"
+    DEBUG = False
+    TESTING = False
+    SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(weeks=4)
 
 
 class DevelopmentConfig(Config):
-    """Development confiugration class."""
-
-    # pylint: disable=too-few-public-methods
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.getenv("DEV_DATABASE_URL", "sqlite:///financial.db")
+    JWT_SECRET_KEY = os.getenv("DEV_JWT_SECRET_KEY", token_hex(32))
 
 
 class TestingConfig(Config):
-    """Testing configuration class."""
-
-    # pylint: disable=too-few-public-methods
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///test_financial.db"
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "TEST_DATABASE_URL", "sqlite:///test_financial.db"
+    )
+    JWT_SECRET_KEY = os.getenv("TEST_JWT_SECRET_KEY", token_hex(32))
 
 
 class ProductionConfig(Config):
-    """Production confiugration class."""
-
-    # pylint: disable=too-few-public-methods
-    DEBUG = False
-
-    SECRET_KEY = "3eaace33b55b8c04ed135319c7c839c7c5935490f4dff183e1dde4dde46353b6"
-
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:4C--EAgGcGFE134C5GefFg6bD3f3f3Dc@roundhouse.proxy.rlwy.net:32076/railway"
-
-    JWT_SECRET_KEY = "403076f90595eca8c0ed389bc51022d11a7f881ccb495958012a96cf6801cb72"
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_PRIVATE_URL",
+        "postgresql://postgres:4C--EAgGcGFE134C5GefFg6bD3f3f3Dc@roundhouse.proxy.rlwy.net:32076/railway",
+    )
+    SECRET_KEY = os.getenv(
+        "SECRET_KEY",
+    )
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
 
 
 CONFIG = {

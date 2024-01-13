@@ -1,10 +1,12 @@
 """Main script to run the Flask application."""
 
+import os
 from api import create_app
 from api.extensions import db
 
 if __name__ == "__main__":
-    environment = "development"
+    environment = os.getenv("FLASK_ENV", "development")
+
 
     APP = create_app(environment)
 
