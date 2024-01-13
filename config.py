@@ -40,9 +40,7 @@ class ProductionConfig(Config):
 
     SECRET_KEY = "3eaace33b55b8c04ed135319c7c839c7c5935490f4dff183e1dde4dde46353b6"
 
-    SQLALCHEMY_DATABASE_URI = (
-        "postgresql://IssaKass:issakass2002@localhost:5432/financial"
-    )
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:4C--EAgGcGFE134C5GefFg6bD3f3f3Dc@roundhouse.proxy.rlwy.net:32076/railway"
 
     JWT_SECRET_KEY = "403076f90595eca8c0ed389bc51022d11a7f881ccb495958012a96cf6801cb72"
 
