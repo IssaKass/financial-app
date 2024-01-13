@@ -7,7 +7,6 @@ from api.extensions import db
 if __name__ == "__main__":
     environment = os.getenv("FLASK_ENV", "development")
 
-
     APP = create_app(environment)
 
     if environment == "testing":
