@@ -14,26 +14,23 @@ class Config:
 
     DEBUG = False
     TESTING = False
-    SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
-    # JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
-    # JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(weeks=4)
+    SECRET_KEY = "1784226bc0e01c0b47699430b5fc62e3800b2336b7d852e17e20bf40da353673"
+    JWT_SECRET_KEY = "b2a3f61c61cd81baafb9d1a12bb61e4e9c594d043206ce938ef840a3884d9e19"
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///financial.db"
-    JWT_SECRET_KEY = "f97bdc26a066f6f100721f609022a3f57d1d9254f62ef55f6a0017c875c2459b"
 
 
 class TestingConfig(Config):
     DEBUG = False
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///test_financial.db"
-    JWT_SECRET_KEY = "fba82ad33aab56ed623ad93f561bf234db8193231bf30af2770f7dabf762d497"
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_PRIVATE_URL")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
     SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
 
