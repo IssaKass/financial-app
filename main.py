@@ -40,16 +40,12 @@
 
 #     app.run(debug=True, port=os.getenv("PORT", default=5000))
 
-from flask import Flask, jsonify
 import os
+from api import create_app
+from dotenv import load_dotenv
 
-app = Flask(__name__)
-
-
-@app.route("/")
-def index():
-    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
-
+load_dotenv()
 
 if __name__ == "__main__":
+    app = create_app()
     app.run(debug=True, port=os.getenv("PORT", default=5000))

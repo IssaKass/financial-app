@@ -21,7 +21,8 @@ Example Usage:
     app = create_app(environment="production")
 """
 
-from flask import Flask, current_app
+import os
+from flask import Flask, current_app, jsonify
 from flask_migrate import Migrate
 from flask_cors import CORS
 from config import get_config
@@ -29,13 +30,18 @@ from api.extensions import db, jwt
 from api.routes import auth_bp, users_bp, projects_bp, subscriptions_bp
 
 
-def create_app(environment="default"):
+def create_app():
     """Create and configure the Flask app."""
 
     app = Flask(__name__)
 
     # Load configuration based on the specified environment
-    app.config.from_object(get_config(environment))
+    flask_env = os.getenv("FLASK_ENV")
+    app.config.from_object(get_config(flask_env))
+
+    @app.route("/")
+    def index():
+        return jsonify({"env": os.getenv("FLASK_ENV")}), 200
 
     # Initialize the database extension
     db.init_app(app)

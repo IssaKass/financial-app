@@ -15,22 +15,21 @@ class Config:
     DEBUG = False
     TESTING = False
     SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(weeks=4)
+    # JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
+    # JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(weeks=4)
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.getenv("DEV_DATABASE_URL", "sqlite:///financial.db")
-    JWT_SECRET_KEY = os.getenv("DEV_JWT_SECRET_KEY", token_hex(32))
+    SQLALCHEMY_DATABASE_URI = "sqlite:///financial.db"
+    JWT_SECRET_KEY = "f97bdc26a066f6f100721f609022a3f57d1d9254f62ef55f6a0017c875c2459b"
 
 
 class TestingConfig(Config):
+    DEBUG = False
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        "TEST_DATABASE_URL", "sqlite:///test_financial.db"
-    )
-    JWT_SECRET_KEY = os.getenv("TEST_JWT_SECRET_KEY", token_hex(32))
+    SQLALCHEMY_DATABASE_URI = "sqlite:///test_financial.db"
+    JWT_SECRET_KEY = "fba82ad33aab56ed623ad93f561bf234db8193231bf30af2770f7dabf762d497"
 
 
 class ProductionConfig(Config):
@@ -38,17 +37,15 @@ class ProductionConfig(Config):
         "DATABASE_PRIVATE_URL",
         "postgresql://postgres:4C--EAgGcGFE134C5GefFg6bD3f3f3Dc@roundhouse.proxy.rlwy.net:32076/railway",
     )
-    SECRET_KEY = os.getenv(
-        "SECRET_KEY",
-    )
+    SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
 
 
 CONFIG = {
+    "default": DevelopmentConfig,
     "development": DevelopmentConfig,
     "testing": TestingConfig,
     "production": ProductionConfig,
-    "default": DevelopmentConfig,
 }
 
 
