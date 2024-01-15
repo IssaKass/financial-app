@@ -19,7 +19,16 @@ app.config.from_object(get_config(flask_env))
 
 @app.route("/")
 def index():
-    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
+    return jsonify(
+        {
+            "ENV": flask_env,
+            "DEBUG": app.config["DEBUG"],
+            "TESTING": app.config["TESTING"],
+            "SECRET_KEY": app.config["SECRET_KEY"],
+            "JWT_SECRET_KEY": app.config["JWT_SECRET_KEY"],
+            "SQLALCHEMY_DATABASE_URI": app.config["SQLALCHEMY_DATABASE_URI"],
+        }
+    )
 
 
 # Initialize the database extension
