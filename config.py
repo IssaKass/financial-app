@@ -33,10 +33,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_PRIVATE_URL",
-        "postgresql://postgres:4C--EAgGcGFE134C5GefFg6bD3f3f3Dc@roundhouse.proxy.rlwy.net:32076/railway",
-    )
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_PRIVATE_URL")
     SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
 

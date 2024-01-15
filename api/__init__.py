@@ -39,9 +39,21 @@ def create_app():
     flask_env = os.getenv("FLASK_ENV")
     app.config.from_object(get_config(flask_env))
 
+    print(flask_env)
+
     @app.route("/")
     def index():
-        return jsonify({"env": os.getenv("FLASK_ENV")}), 200
+        return (
+            jsonify(
+                {
+                    "env": os.getenv("FLASK_ENV"),
+                    "secret_key": os.getenv("SECRET_KEY"),
+                    "jwt_secret_key": os.getenv("JWT_SECRET_KEY"),
+                    "db_uri": os.getenv("SQLALCHEMY_DATABASE_URI"),
+                }
+            ),
+            200,
+        )
 
     # Initialize the database extension
     db.init_app(app)
