@@ -40,19 +40,22 @@ class User(db.Model):
 
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    username = db.Column(db.String, unique=True, index=True, nullable=False)
+    email = db.Column(db.String, unique=True, index=True, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
-    created_at = db.Column(db.DateTime, default=func.now())
-    updated_at = db.Column(db.DateTime, default=func.now(), onupdate=func.now())
-
+    created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
+    updated_at = db.Column(
+        db.DateTime, default=func.now(), onupdate=func.now(), nullable=False
+    )
     projects = db.relationship(
-        "project.Project", backref="user_projects", cascade="all, delete-orphan"
+        "project.Project",
+        back_populates="user",
+        cascade="all, delete-orphan",
     )
     subscriptions = db.relationship(
         "subscription.Subscription",
-        backref="user_subscriptions",
+        back_populates="user",
         cascade="all, delete-orphan",
     )
 

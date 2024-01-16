@@ -47,23 +47,23 @@ class Subscription(db.Model):
 
     __tablename__ = "subscriptions"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String, unique=False, nullable=False)
     website = db.Column(db.String, nullable=False)
     price = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
     active = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.DateTime, default=func.now())
-    updated_at = db.Column(db.DateTime, default=func.now(), onupdate=func.now())
-
+    created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
+    updated_at = db.Column(
+        db.DateTime, default=func.now(), onupdate=func.now(), nullable=False
+    )
     user_id = db.Column(
         db.Integer,
-        db.ForeignKey("users.id", name="fk_subscription_user_id"),
+        db.ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
     )
-
-    user = db.relationship("user.User", backref="subscription_user")
+    user = db.relationship("user.User", back_populates="subscriptions")
 
     def __init__(self, name, website, price, start_date, end_date, user_id) -> None:
         """Subscription Constructor Method"""

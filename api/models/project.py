@@ -44,7 +44,7 @@ from sqlalchemy.sql import func
 from api.extensions import db
 
 
-class ProjectStatus(Enum):
+class ProjectStatus(str, Enum):
     PENDING = "PENDING"
     PROGRESS = "PROGRESS"
     FINISHED = "FINISHED"
@@ -55,7 +55,7 @@ class Project(db.Model):
 
     __tablename__ = "projects"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String, unique=True, nullable=False)
     client = db.Column(db.String, nullable=False)
     budget = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
@@ -68,12 +68,10 @@ class Project(db.Model):
     updated_at = db.Column(
         db.DateTime, default=func.now(), onupdate=func.now(), nullable=False
     )
-
     user_id = db.Column(
-        db.Integer, db.ForeignKey("users.id", name="fk_project_user_id"), nullable=False
+        db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
-
-    user = db.relationship("user.User", backref="project_user")
+    user = db.relationship("user.User", back_populates="projects")
 
     def __init__(
         self,
@@ -111,7 +109,7 @@ class Project(db.Model):
             "budget": self.budget,
             "images": self.images,
             "animation": self.animation,
-            "status": self.status.name,
+            "status": self.status,
             "start_date": self.start_date,
             "end_date": self.end_date,
             "created_at": self.created_at,
