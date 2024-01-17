@@ -131,6 +131,16 @@ def update_project(pk):
         if "status" in data and data["status"]
         else project.status
     )
+    project.start_date = (
+        datetime.strptime(data["start_date"], "%Y-%m-%dT%H:%M:%S.%fZ")
+        if "start_date" in data
+        else project.start_date
+    )
+    project.end_date = (
+        datetime.strptime(data["end_date"], "%Y-%m-%dT%H:%M:%S.%fZ")
+        if "end_date" in data
+        else project.end_date
+    )
 
     db.session.commit()
     return jsonify(project.serialize()), 200

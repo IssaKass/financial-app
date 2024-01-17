@@ -37,8 +37,8 @@ def create_subscription():
         return jsonify({"error": f"User with id {user_id} does not exist"}), 404
 
     try:
-        start_date = datetime.fromisoformat(data["start_date"])
-        end_date = datetime.fromisoformat(data["end_date"])
+        start_date = datetime.strptime(data["start_date"], "%Y-%m-%dT%H:%M:%S.%fZ")
+        end_date = datetime.strptime(data["end_date"], "%Y-%m-%dT%H:%M:%S.%fZ")
 
         subscription = Subscription(
             name=data["name"].strip(),
@@ -103,6 +103,16 @@ def update_subscription(pk):
     )
     subscription.active = (
         bool(data["active"]) if "active" in data else subscription.active
+    )
+    subscription.start_date = (
+        datetime.strptime(data["start_date"], "%Y-%m-%dT%H:%M:%S.%fZ")
+        if "start_date" in data
+        else subscription.start_date
+    )
+    subscription.end_date = (
+        datetime.strptime(data["end_date"], "%Y-%m-%dT%H:%M:%S.%fZ")
+        if "end_date" in data
+        else subscription.end_date
     )
 
     db.session.commit()
