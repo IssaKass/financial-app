@@ -72,12 +72,16 @@ def register():
     """Endpoint for user registration."""
 
     users_api_url = url_for("users.create_user", _external=True)
-    response = requests.post(users_api_url, json=request.json, timeout=60)
 
-    if response.status_code == 201:
-        return "Registered"
+    try:
+        response = requests.post(users_api_url, json=request.json, timeout=60)
 
-    return jsonify(response.json()), response.status_code
+        if response.status_code == 201:
+            return jsonify({"message": "Registered"}), 201
+
+        return jsonify(response.json()), response.status_code
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @auth_bp.route("/profile", methods=["GET"])
