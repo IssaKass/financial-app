@@ -44,7 +44,7 @@ class User(db.Model):
     username = db.Column(db.String, unique=True, index=True, nullable=False)
     email = db.Column(db.String, unique=True, index=True, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
-    created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
+    created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
     updated_at = db.Column(
         db.DateTime, default=func.now(), onupdate=func.now(), nullable=False
     )
