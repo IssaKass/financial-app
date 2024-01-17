@@ -5,7 +5,7 @@ from datetime import datetime
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
-projects_bp = Blueprint("projects", __name__, url_prefix="/projects")
+projects_bp = Blueprint("projects", __name__)
 
 
 def get_serialized_projects():
@@ -14,13 +14,13 @@ def get_serialized_projects():
     return serialized_projects
 
 
-@projects_bp.route("/", methods=["GET"])
+@projects_bp.route("/projects", methods=["GET"])
 def get_all_projects():
     serialized_projects = get_serialized_projects()
     return jsonify(serialized_projects), 200
 
 
-@projects_bp.route("/", methods=["POST"])
+@projects_bp.route("/projects", methods=["POST"])
 @jwt_required()
 def create_project():
     data = request.json
@@ -76,7 +76,7 @@ def create_project():
         return jsonify({"error": f"Failed to create project: {ex}"}), 500
 
 
-@projects_bp.route("/<int:pk>", methods=["GET"])
+@projects_bp.route("/projects/<int:pk>", methods=["GET"])
 def get_project(pk):
     project = Project.query.get(pk)
 
@@ -86,7 +86,7 @@ def get_project(pk):
     return jsonify(project.serialize()), 200
 
 
-@projects_bp.route("/<int:pk>", methods=["PUT"])
+@projects_bp.route("/projects/<int:pk>", methods=["PUT"])
 @jwt_required()
 def update_project(pk):
     project = Project.query.get(pk)
@@ -136,7 +136,7 @@ def update_project(pk):
     return jsonify(project.serialize()), 200
 
 
-@projects_bp.route("/<int:pk>", methods=["DELETE"])
+@projects_bp.route("/projects/<int:pk>", methods=["DELETE"])
 @jwt_required()
 def delete_project(pk):
     project = Project.query.get(pk)

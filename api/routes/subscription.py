@@ -4,7 +4,7 @@ from api.extensions import db
 from datetime import datetime
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-subscriptions_bp = Blueprint("subscriptions", __name__, url_prefix="/subscriptions")
+subscriptions_bp = Blueprint("subscriptions", __name__)
 
 
 def get_serialized_subscriptions():
@@ -15,13 +15,13 @@ def get_serialized_subscriptions():
     return serialized_subscriptions
 
 
-@subscriptions_bp.route("/", methods=["GET"])
+@subscriptions_bp.route("/subscriptions", methods=["GET"])
 def get_all_subscriptions():
     serialized_subscriptions = get_serialized_subscriptions()
     return jsonify(serialized_subscriptions), 200
 
 
-@subscriptions_bp.route("/", methods=["POST"])
+@subscriptions_bp.route("/subscriptions", methods=["POST"])
 @jwt_required()
 def create_subscription():
     data = request.json
@@ -62,7 +62,7 @@ def create_subscription():
         return jsonify({"error": f"Failed to create subscription: {ex}"}), 500
 
 
-@subscriptions_bp.route("/<int:pk>", methods=["GET"])
+@subscriptions_bp.route("/subscriptions/<int:pk>", methods=["GET"])
 def get_subscription(pk):
     subscription = Subscription.query.get(pk)
 
@@ -72,7 +72,7 @@ def get_subscription(pk):
     return jsonify(subscription.serialize()), 200
 
 
-@subscriptions_bp.route("/<int:pk>", methods=["PUT"])
+@subscriptions_bp.route("/subscriptions/<int:pk>", methods=["PUT"])
 @jwt_required()
 def update_subscription(pk):
     subscription = Subscription.query.get(pk)
@@ -109,7 +109,7 @@ def update_subscription(pk):
     return jsonify(subscription.serialize()), 200
 
 
-@subscriptions_bp.route("/<int:pk>", methods=["DELETE"])
+@subscriptions_bp.route("/subscriptions/<int:pk>", methods=["DELETE"])
 @jwt_required()
 def delete_subscription(pk):
     subscription = Subscription.query.get(pk)
