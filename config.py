@@ -33,7 +33,7 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
     SECRET_KEY = os.getenv("SECRET_KEY", token_hex(32))
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", token_hex(32))
-    JWT_ACCESS_TOKEN_EXPIRES = os.getenv("JWT_ACCESS_TOKEN_EXPIRES", timedelta(days=30))
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=30)
 
 
 CONFIG = {

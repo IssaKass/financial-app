@@ -32,20 +32,22 @@ Example Usage:
 import re
 
 USERNAME_PATTERN = {
-    "pattern": re.compile(r"^[\w-]{3,20}$"),
+    "pattern": re.compile(r"^[A-Za-z0-9@#$%^&+=\s]{3,20}$"),
     "message": "Invalid username. 3-20 chars, letters, nums, symbols.",
 }
 EMAIL_PATTERN = {
-    "pattern": re.compile(r"[^@]+@[^@]+\.[^@]+"),
+    "pattern": re.compile(
+        r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+    ),
     "message": "Invalid email. Use a valid address, e.g., yourname@example.com.",
 }
 PASSWORD_PATTERN = {
-    "pattern": re.compile(r"^[\w\d_-]{8,}$"),
+    "pattern": re.compile(r"^[A-Za-z0-9@#$%^&+=]{8,}$"),
     "message": "Invalid password. Min 8 chars, letters, nums, symbols.",
 }
 
 
-def validate(value, pattern):
+def validate(value, pattern: re):
     """
     Validate a value against a predefined pattern.
 
@@ -63,4 +65,4 @@ def validate(value, pattern):
         >>> print(is_valid_username)
         True
     """
-    return bool(pattern["pattern"].match(value))
+    return bool(pattern.search(value))

@@ -72,7 +72,7 @@ def register():
     """Endpoint for user registration."""
 
     users_api_url = url_for("users.create_user", _external=True)
-    response = requests.post(users_api_url, json=request.json, timeout=10)
+    response = requests.post(users_api_url, json=request.json, timeout=60)
 
     if response.status_code == 201:
         return "Registered"

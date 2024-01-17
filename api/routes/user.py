@@ -33,13 +33,13 @@ def create_user():
     email = data["email"].strip()
     password = data["password"].strip()
 
-    if not validate(username, USERNAME_PATTERN):
+    if not validate(username, USERNAME_PATTERN["pattern"]):
         return jsonify({"error": {"username": USERNAME_PATTERN["message"]}}), 400
 
-    if not validate(email, EMAIL_PATTERN):
+    if not validate(email, EMAIL_PATTERN["pattern"]):
         return jsonify({"error": {"email": EMAIL_PATTERN["message"]}}), 400
 
-    if not validate(password, PASSWORD_PATTERN):
+    if not validate(password, PASSWORD_PATTERN["pattern"]):
         return jsonify({"error": {"password": PASSWORD_PATTERN["message"]}}), 400
 
     try:
