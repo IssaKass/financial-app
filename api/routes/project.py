@@ -115,16 +115,10 @@ def update_project(pk):
         if "client" in data and data["client"]
         else project.client
     )
-    project.budget = (
-        float(data["budget"]) if "budget" in data and data["budget"] else project.budget
-    )
-    project.images = (
-        int(data["images"]) if "images" in data and data["images"] else project.images
-    )
+    project.budget = float(data["budget"]) if "budget" in data else project.budget
+    project.images = int(data["images"]) if "images" in data else project.images
     project.animation = (
-        int(data["animation"])
-        if "animation" in data and data["animation"]
-        else project.animation
+        int(data["animation"]) if "animation" in data else project.animation
     )
     project.status = (
         ProjectStatus[data["status"]]

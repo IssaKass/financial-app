@@ -96,11 +96,7 @@ def update_subscription(pk):
         if "website" in data and data["website"]
         else subscription.website
     )
-    subscription.price = (
-        float(data["price"])
-        if "price" in data and data["price"]
-        else subscription.price
-    )
+    subscription.price = float(data["price"]) if "price" in data else subscription.price
     subscription.active = (
         bool(data["active"]) if "active" in data else subscription.active
     )
