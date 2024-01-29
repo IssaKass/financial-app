@@ -2,11 +2,18 @@
 
 import os
 from flask_cors import CORS
-from flask import Flask, request, jsonify
+from flask import Flask
 from flask_migrate import Migrate
 from config import get_config
 from api.extensions import db, jwt
-from api.routes import auth_bp, users_bp, projects_bp, subscriptions_bp, export_bp
+from api.routes import (
+    auth_bp,
+    users_bp,
+    projects_bp,
+    subscriptions_bp,
+    tasks_bp,
+    export_bp,
+)
 
 app = Flask(__name__)
 
@@ -30,6 +37,7 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(users_bp)
 app.register_blueprint(projects_bp)
 app.register_blueprint(subscriptions_bp)
+app.register_blueprint(tasks_bp)
 app.register_blueprint(export_bp)
 
 

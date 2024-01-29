@@ -73,6 +73,12 @@ class Project(db.Model):
     )
     user = db.relationship("user.User", back_populates="projects")
 
+    tasks = db.relationship(
+        "task.Task",
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
+
     def __init__(
         self,
         name,
@@ -118,4 +124,5 @@ class Project(db.Model):
                 "id": self.user_id,
                 "url": url_for("users.get_user", pk=self.user_id),
             },
+            "tasks_url": url_for("projects.get_project_tasks", pk=self.id),
         }

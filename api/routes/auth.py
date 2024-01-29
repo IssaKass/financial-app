@@ -28,7 +28,7 @@ from flask_jwt_extended import (
 from api.models import User
 
 # Create a Blueprint for authentication
-auth_bp = Blueprint("auth", __name__, url_prefix="/auth")
+auth_bp = Blueprint("auth", __name__, url_prefix="/api/v1/auth")
 
 
 def get_current_user():
@@ -65,23 +65,6 @@ def login():
 
     access_token = create_access_token(identity=user.id)
     return jsonify({"userToken": access_token, "user": user.serialize()}), 200
-
-
-# @auth_bp.route("/register", methods=["POST"])
-# def register():
-#     """Endpoint for user registration."""
-
-#     users_api_url = url_for("users.create_user", _external=True)
-
-#     try:
-#         response = requests.post(users_api_url, json=request.json, timeout=60)
-
-#         if response.status_code == 201:
-#             return jsonify({"message": "Registered"}), 201
-
-#         return jsonify(response.json()), response.status_code
-#     except requests.RequestException as e:
-#         return jsonify({"error": str(e)}), 500
 
 
 @auth_bp.route("/profile", methods=["GET"])
