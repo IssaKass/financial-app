@@ -108,6 +108,9 @@ def update_user(pk):
     if "password" in data:
         user.set_password(data.get("password"))
 
+    user.name = data.get("name", user.name).strip()
+    user.company = data.get("company", user.company).strip()
+
     db.session.commit()
     return jsonify(user.serialize()), 200
 

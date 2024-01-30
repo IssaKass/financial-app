@@ -28,7 +28,6 @@ Example Usage:
     db.session.commit()
 """
 
-
 from sqlalchemy.sql import func
 from flask import url_for
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -58,6 +57,10 @@ class User(db.Model):
         back_populates="user",
         cascade="all, delete-orphan",
     )
+
+    # Additional optional information
+    name = db.Column(db.String, nullable=True)
+    company = db.Column(db.String, nullable=True)
 
     def __init__(self, username, email, password):
         """User Constructor Method"""
@@ -92,4 +95,6 @@ class User(db.Model):
             "updated_at": self.updated_at,
             "projects_url": url_for("users.get_user_projects", pk=self.id),
             "subscriptions_url": url_for("users.get_user_subscriptions", pk=self.id),
+            "name": self.name,
+            "company": self.company,
         }
