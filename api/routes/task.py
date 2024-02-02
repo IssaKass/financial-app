@@ -78,9 +78,7 @@ def update_task(pk):
         str(data["title"]).strip() if "title" in data and data["title"] else task.title
     )
     task.description = (
-        str(data["description"]).strip()
-        if "description" in data and data["description"]
-        else task.description
+        str(data["description"]).strip() if "description" in data else task.description
     )
     task.completed = bool(data["completed"]) if "completed" in data else task.completed
 

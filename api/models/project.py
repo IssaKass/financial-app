@@ -57,6 +57,7 @@ class Project(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String, unique=True, nullable=False)
+    description = db.Column(db.Text, nullable=True)
     client = db.Column(db.String, nullable=False)
     budget = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
     images = db.Column(db.Integer, nullable=True, default=0)
@@ -111,6 +112,7 @@ class Project(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "description": self.description,
             "client": self.client,
             "budget": self.budget,
             "images": self.images,

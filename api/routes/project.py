@@ -54,6 +54,7 @@ def create_project():
             end_date=end_date,
             user_id=data["user_id"],
         )
+        project.description = str(data["description"]) if "description" in data else ""
         project.images = (
             int(data["images"]) if "images" in data and data["images"] else 0
         )
@@ -114,6 +115,11 @@ def update_project(pk):
         str(data["client"]).strip()
         if "client" in data and data["client"]
         else project.client
+    )
+    project.description = (
+        str(data["description"]).strip()
+        if "description" in data
+        else project.description
     )
     project.budget = float(data["budget"]) if "budget" in data else project.budget
     project.images = int(data["images"]) if "images" in data else project.images
